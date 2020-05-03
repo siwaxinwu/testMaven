@@ -1,0 +1,48 @@
+mybatis的前身：ibatis，是由internet和Abatis组成，是互联网的篱笆墙
+MyBatis 使用了哪些设计模式？在源码中是如何体现的？
+
+工厂模式：SqlsessionFactory用来生产sqlSession，sqlsession是mybatis重要的接口，通过该接口
+来执行SQL命令、获取映射器示例和管理事务，SqlsessionFactory是一个接口类，
+他的子类DefaultSqlsessionFactory有一个openSession（ExecuterType executerType）的方法，
+使用工厂模式获取sqlsession实例
+
+建造者模式：将一个复杂对象的构建和他的表示分开，使得同样的构建过程可以创建不同的表示
+建造者模式在mybatis中的典型应用SqlsessionFactoryBuilder
+    在SqlsessionFactoryBuilder中构建SqlsessionFactory对象的过程：
+    通过XMLConfigBuilder对象读取并解析XML配置文件
+    将读取的配置文件信息存入到Configuration中
+    通过build方法生成我们需要的SqlSessionFactory对象
+
+单例模式：此模式保证某个类在运行期间只有一个实例对外提供服务，这个服务称为单例
+单例在mybatis中的典型代表：ErrorContext，ErrorContext是线程级别的单例，
+每个线程中有一个此对象的单例用于记录该线程的执行环境的错误信息
+
+适配器模式：将一个不兼容的接口转换成另一个可以兼容的接口，这样就可以使那些不兼容的类一起工作
+mybatis中的典型代表是Log，mybatis定义了一个Log接口，用于统一和规范接口的行为
+
+代理模式：指的是给某一个对象提供一个代理对象，并由代理对象控制原对象的调用
+mybatis中典型代表是MapperProxyFactory,MapperProxyFactory接口的newInstance（）方法生成代理类
+
+模板方法模式：定义一个操作方法的骨架，一些步骤的实现延迟到子类当中实现
+使得子类可以不改变一个算法的结构，即可重新定义算法的某些特定步骤
+此模式是基于继承的思想来实现代码复用的
+mybatis中的典型应用：BaseExecuter，在mybatis中BaseExecuter实现了大部分SQL执行的逻辑
+然后把几个方法交给子类来实现继承关系
+Executer、BaseExecuter、ReuseExecuter、BatchExecuter、SimpleExecuter
+SimpleExecuter每次使用完Statement对象之后，都会将他关闭
+ReuseExecuter每次使用完statement对象之后，都不会将它关闭
+
+装饰器模式：允许一个现有的对象添加新的功能，同时又不改变他的结构，
+这种类型的设计模式属于结构型模式，他是作为现有类的一个包装
+mybatis的典型应用：cache
+Cache除了有数据存储和缓存的基本功能外，还有其他的附加Cache类，比如先进先出的FIfocache
+最近最少使用的LruCache
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+RollingFileAppender：滚动记录文件
+继承自FileAppender，rollingPolicy负责怎么切换日志，TriggeringPolicy负责何时切换
+configuration有3个子标签：appender、logger、root
+appender负责写日志的组件
+ConsoleAppender：负责写到控制台
+encoder：对日志进行格式化
+FileAppender：把日志输出到文件
+rollingPolicy：TimeBasedRollingPolicy
+logback使用需要和slf4j一起使用，所以总共需要添加依赖的包有
+slf4j-api.jar，logback-core.jar，logback-classic.jar，logback-access.jar
+<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度   %msg：日志消息，%n是换行符-->
+<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>

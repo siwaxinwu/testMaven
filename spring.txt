@@ -1,0 +1,90 @@
+Bean的5种作用域
+singleton：单例作用域，整个spring容器中只有一个Bean实例，以单例的形式存在，是默认的bean作用域
+prototype：原型作用域，每次调用bean都会创建一个新实例，每次调用getrBean（）方法的时候，相当于执行了
+new Bean（）
+request：每次http请求时候都会创建一个bean，该作用域仅适用于WebApplicationContext环境
+session：同一个session共享一个bean对象，不同的session拥有不同的bean对象
+application作用域：全局的web作用域，类似于Servlet的Application
+
+什么是同名的bean，他是如何产生的，应该如何避免
+同名bean是指多个bean具有相同的id或者name
+Spring对待同名的bean的处理规则：后面的bean覆盖前面的bean
+如何避免：定义bean的时候，采用驼峰的形式，长命名类的名称改驼峰，
+如果留空的话，容器会为bean默认生成一个唯一的名称
+同一个配置文件中，bean的id或者name是不能相等的，否则Spring容器启动报错
+
+Beanfactory的getBean（）
+AbstractAutowiredCapableBeanFactory的createBean（）方法，
+createBean（）方法是通过docreateBean（）来实现的
+
+初始化的第一个步骤就是检查bean有没有实现BeanNameAware、BeanClassLoaderAware、BeanFactoryAware
+
+Bean的3种注册方式：注解、xml、JAVAAPI
+
+谈一谈你对IOC和DI的理解
+即控制反转，并不是一个具体的技术，而是一种思想，传统编程中，需要开发者自行创建并销毁对象
+而在IOC中会把这些创建对象的操作交给Spring容器来实现，开发者直接拿来使用即可，这就是控制反转
+DI依赖注入：由容器动态的将某个依赖关系注入到组件之中。
+IOC和DI是Spring框架的精髓
+SpringIOC的优点：
+    使用方便、拿来即用，无需显式的创建和销毁的过程
+    很方便的提供众多的服务，比如事务管理、消息服务、redis、kafka
+    提工单例模式的支持
+    提供AOP的抽象，实现权限的拦截、运行监控等等
+    更符合java面向对象的特征
+    低侵入式设计，代码污染极低，降低业务对象替换的复杂性
+
+SpringIOC注入方式的汇总
+    构造方法注入
+    Setter注入
+    接口注入
+
+Springboot有哪些优点，他和spring有哪些区别
+    Springboot是spring框架的延伸和扩展，是为了简化spring框架初始搭建开发的流程
+    使用它可以不再依赖Spring应用程序中的xml配置，为更快、更高效的开发Spring提供更加有力的支持
+
+Springboot的四大特性
+    更快速的构建能力：提供了更多的starters用于快速构建业务框架
+    springboot只需要一个依赖项就可以启动和运行Web应用程序、spring-boot-starter—web
+    只需要添加spring-boot-starter—test即可集成测试库
+    常见的starter：spring-boot-starter—web、spring-boot-starter—test、
+    spring-boot-starter—data-jpa、spring-boot-starter—thymeleaf
+    起步依赖：创建springboot的时候可以直接勾选依赖模块，
+    这样在项目初始化时就会把相关依赖添加到项目中，大大缩短了查询并添加依赖的时间
+    内嵌容器支持：内嵌了Tomcat、Jetty、Undertow3种容器，默认tomcat，
+    Actuator监控：springboot自带Actuator监控,主要用于提供对应用程序监控以及控制的能力
+    比如监控应用程序的运行状况，比如内存、线程池、http请求统计
+
+Sproingboot启动流程
+    1.创建并启动计时监控类，此计时器是为了监控并记录Springboot应用启动的时间
+    2.声明应用上下文对象和异常报告集合
+    3.设置系统属性headless的值
+    4.创建所有spring运行监听器并发布应用启动事件
+    5.初始化默认应用的参数类，声明并创建一个应用参数对象
+    6.准备环境，创建配置并绑定环境
+    7.创建Banner的打印类，springboot启动时会打印banner图片，可以通过实现Banner接口来定义banner信息
+    然后通过setBanner（）方法设置进去，或者在resources下添加一个banner.txt
+    8.创建应用上下文，根据不同的应用类型创建不同的ApplicationContext上下文对象
+    9.实例化异常报告器
+    10.准备应用上下文
+    11.刷新应用上下文
+    12.刷新应用上下文之后的事件处理
+    13.停止计时监控类
+    14.输出日志信息
+    15.发布应用上下文启动完成事件
+    16.执行所有的Runner运行器
+    17.发布应用上下文就绪事件
+    18.返回应用上下文对象
+
+
+
+
+
+
+
+
+
+
+
+
+
