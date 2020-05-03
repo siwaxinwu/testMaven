@@ -1,14 +1,14 @@
-/*
 package designmode;
 
 import org.apache.commons.lang3.StringUtils;
 
-*/
 /**
  * 简单工厂模式
  * 内型非常多的时候，难于扩展
  * 工厂模式分为简单工厂、工厂方法、抽象工厂模式
- *//*
+ *
+ * */
+
 
 public class SimpleFactory {
     public static Car createCar(String name) {
@@ -46,4 +46,3 @@ class AoDi implements Car {
         System.out.println("我是奥迪汽车..");
     }
 }
-*/
