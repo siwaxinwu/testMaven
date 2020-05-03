@@ -43,7 +43,7 @@ MQ的特点是什么
 常见的MQ中间件的优缺点分析
 Redis:轻量级的消息中间件，List实现消息队列或者redis提供发布订阅，但发布订阅不支持持久化和消息确认
 Kafka的吞吐量比rabbitMQ高一两个等级
-Kafka有幂等性功能，而rabbitMQ没有11
+Kafka有幂等性功能，而rabbitMQ没有
 
 
 
