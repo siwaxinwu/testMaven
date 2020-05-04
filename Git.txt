@@ -1,0 +1,6 @@
+github远程建了分支，本地看不到的问题
+    原因：Git  branch -a 查看的是本地仓库的所有分支  远程新建的没有同步前 就是看不到
+    解决：$git checkout master   //首先切到master分支
+    $git pull //同步下master
+    $git branch -a   //查看所有本地查库分支
+    然后你会发现本地仓库的分支是远程最新的所有分支了
