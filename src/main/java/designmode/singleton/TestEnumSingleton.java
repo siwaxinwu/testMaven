@@ -1,5 +1,8 @@
 package designmode.singleton;
 
+/**
+ * 枚举内部的构造方法构建对象的
+ */
 public class TestEnumSingleton {
     private TestEnumSingleton(){}
     static enum EnumSingleton{

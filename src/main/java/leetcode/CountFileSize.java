@@ -21,6 +21,8 @@ public class CountFileSize {
                 for (File file1: file.listFiles()) {
                     count(file1);
                 }
+
+
             }
         }
 

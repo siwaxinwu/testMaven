@@ -1,24 +1,23 @@
 Bean的5种作用域
-singleton：单例作用域，整个spring容器中只有一个Bean实例，以单例的形式存在，是默认的bean作用域
-prototype：原型作用域，每次调用bean都会创建一个新实例，每次调用getrBean（）方法的时候，相当于执行了
-new Bean（）
-request：每次http请求时候都会创建一个bean，该作用域仅适用于WebApplicationContext环境
-session：同一个session共享一个bean对象，不同的session拥有不同的bean对象
-application作用域：全局的web作用域，类似于Servlet的Application
+    singleton：单例作用域，整个spring容器中只有一个Bean实例，以单例的形式存在，是默认的bean作用域
+    prototype：原型作用域，每次调用bean都会创建一个新实例，每次调用getBean（）方法的时候，
+    相当于执行了new Bean（）
+    request：每次http请求时候都会创建一个bean，该作用域仅适用于WebApplicationContext环境
+    session：同一个session共享一个bean对象，不同的session拥有不同的bean对象
+    application作用域：全局的web作用域，类似于Servlet的Application
 
 什么是同名的bean，他是如何产生的，应该如何避免
-同名bean是指多个bean具有相同的id或者name
-Spring对待同名的bean的处理规则：后面的bean覆盖前面的bean
-如何避免：定义bean的时候，采用驼峰的形式，长命名类的名称改驼峰，
-如果留空的话，容器会为bean默认生成一个唯一的名称
-同一个配置文件中，bean的id或者name是不能相等的，否则Spring容器启动报错
+    同名bean是指多个bean具有相同的id或者name
+    Spring对待同名的bean的处理规则：后面的bean覆盖前面的bean
+    如何避免：定义bean的时候，采用驼峰的形式，长命名类的名称改驼峰，
+    如果留空的话，容器会为bean默认生成一个唯一的名称
+    同一个配置文件中，bean的id或者name是不能相等的，否则Spring容器启动报错
 
 Beanfactory的getBean（）
 AbstractAutowiredCapableBeanFactory的createBean（）方法，
 createBean（）方法是通过docreateBean（）来实现的
 
 初始化的第一个步骤就是检查bean有没有实现BeanNameAware、BeanClassLoaderAware、BeanFactoryAware
-
 Bean的3种注册方式：注解、xml、JAVAAPI
 
 谈一谈你对IOC和DI的理解
@@ -75,6 +74,77 @@ Sproingboot启动流程
     16.执行所有的Runner运行器
     17.发布应用上下文就绪事件
     18.返回应用上下文对象
+
+
+@ImportResource:引入的是xml配置文件
+@ConfigurationProperties：引入的是配置文件的前缀，并自动装配
+@PropertSource：引入的是property文件，不支持yml文件
+
+
+SpringBoot项目优化点
+    使用Undertow代替tomacat
+    将一些热点数据和静态数据缓存到redis中
+    将接口中可以并行的代码重新开启线程运行，做到异步，比如开户的过程中帮用户开通网银就可以使用异步
+    业务拆分
+    集成消息队列
+
+@EnableAutoConfiguration的作用
+    @EnableAutoConfiguration 表示启用 Spring 应用程序时,上下文的自动配置，
+    该注解会自动导入一个名为 AutoConfigurationImportSelector 的类,
+    而这个类会去读取一个名为 spring.factories 的文件,
+    spring.factories 中则定义需要加载的自动化配置类
+
+Spring Boot 中如何解决跨域问题 ?
+    跨域可以在前端通过 JSONP 来解决，但是 JSONP 只可以发送 GET 请求，无法发送其他类型的请求，
+    在 RESTful 风格的应用中，就显得非常鸡肋，因此我们推荐在后端通过
+    （CORS，Cross-origin resource sharing） 来解决跨域问题。
+    这种解决方案并非 Spring Boot 特有的，
+	在传统的 SSM 框架中，就可以通过 CORS 来解决跨域问题，
+    现在则是通过 @CrossOrigin 注解来解决跨域问题。
+	所谓同源是指协议、域名以及端口要相同
+	假如一家银行用以运行转账操作的URL地址如下：http://icbc.com/aa?bb=cc，那么，
+	一个恶意攻击者可以在另一个网站上放置如下代码：<img src="http://icbc.com/aa?bb=cc">，
+	如果用户访问了恶意站点，而她之前刚访问过银行不久，登录信息尚未过期，那么她就会遭受损失。
+	基于此，浏览器在实际操作中，会对请求进行分类，分为简单请求，预先请求，带凭证的请求等，
+	预先请求会首先发送一个 options 探测请求，和浏览器进行协商是否接受请求。
+	默认情况下跨域请求是不需要凭证的，但是服务端可以配置要求客户端提供凭证，
+	这样就可以有效避免 csrf 攻击。
+
+Spring中循环依赖场景有：
+    （1）构造器的循环依赖
+    （2）field属性的循环依赖。
+
+Spring怎么检测是否存在循环依赖
+    检测循环依赖相对比较容易，Bean在创建的时候可以给该Bean打标，如果递归调用回来发现正在创建中的话，
+    即说明了循环依赖了。
+
+Spring为了解决单例的循环依赖问题，使用了哪三级缓存
+    三级缓存singletonFactories ： 单例对象工厂的cache
+    二级缓存earlySingletonObjects ：提前暴光的单例对象的Cache
+    一级缓存singletonObjects：单例对象的cache
+
+Spring怎么解决循环依赖
+    Spring的循环依赖的理论依据其实是基于Java的引用传递，当我们获取到对象的引用时，
+    对象的field或则属性是可以延后设置的(但是构造器必须是在获取引用之前)。
+    Spring的单例对象的初始化主要分为三步：
+    （1）createBeanInstance：实例化，其实也就是调用对象的构造方法实例化对象
+    （2）populateBean：填充属性，这一步主要是多bean的依赖属性进行填充
+    （3）initializeBean：调用spring xml中的init 方法。
+    从上面讲述的单例bean初始化步骤我们可以知道，循环依赖主要发生在第一、第二部。
+    也就是构造器循环依赖和field循环依赖。
+    我们在创建bean的时候，首先想到的是从cache中获取这个单例的bean，
+    这个缓存就是singletonObjects。主要调用方法就就是：getSingleton()
+    Spring首先从一级缓存singletonObjects中获取。如果获取不到，并且对象正在创建中，
+    就再从二级缓存earlySingletonObjects中获取。
+    如果还是获取不到且允许singletonFactories通过getObject()获取，
+    就从三级缓存singletonFactory.getObject()(三级缓存)获取，如果获取到了则：
+    从singletonFactories中移除，并放入earlySingletonObjects中。
+    其实也就是从三级缓存移动到了二级缓存。
+    这里就是解决循环依赖的关键，这段代码发生在createBeanInstance之后，
+    也就是说单例对象此时已经被创建出来(调用了构造器)。这个对象已经被生产出来了，
+    虽然还不完美（还没有进行初始化的第二步和第三步），
+    但是已经能被人认出来了（根据对象引用能定位到堆中的对象），
+    所以Spring此时将这个对象提前曝光出来让大家认识，让大家使用。
 
 
 
