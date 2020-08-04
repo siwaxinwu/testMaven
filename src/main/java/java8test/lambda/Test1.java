@@ -1,5 +1,9 @@
 package java8test.lambda;
 
+
+
+
+
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;

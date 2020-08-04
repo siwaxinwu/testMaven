@@ -1,6 +1,9 @@
 package IO;
 
+
+
 import org.junit.jupiter.api.Test;
+
 
 import java.io.*;
 
@@ -55,7 +58,7 @@ public class IOTest {
     }
 
     //创建源、选择流、分段读取
-    @Test
+
     public void test03() {
         File file = new File("io.txt");
         InputStream fis = null;
